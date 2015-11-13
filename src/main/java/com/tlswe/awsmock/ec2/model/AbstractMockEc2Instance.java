@@ -3,6 +3,7 @@ package com.tlswe.awsmock.ec2.model;
 import com.tlswe.awsmock.common.exception.AwsMockException;
 import com.tlswe.awsmock.common.util.Constants;
 import com.tlswe.awsmock.common.util.PropertiesUtils;
+import com.tlswe.awsmock.ec2.cxf_generated.InstanceStatusEventsSetType;
 
 import java.io.Serializable;
 import java.util.*;
@@ -43,7 +44,7 @@ public abstract class AbstractMockEc2Instance implements Serializable {
      */
     protected static final String MOCK_PUBDNS_POSTFIX = ".amazon.com";
 
-    /**
+	/**
      * Enumeration of all allowed instance types.
      *
      * @author xma
@@ -353,6 +354,8 @@ public abstract class AbstractMockEc2Instance implements Serializable {
      */
     private Set<String> securityGroups = new TreeSet<String>();
 
+	private Set<InstanceEvent> events = new LinkedHashSet<>();
+
     /**
      * Flag that indicates whether internal timer of this mock ec2 instance has been started (on instance start()).
      */
@@ -399,6 +402,10 @@ public abstract class AbstractMockEc2Instance implements Serializable {
                             .substring(0, INSTANCE_ID_POSTFIX_LENGTH);
         }
     }
+
+	public AbstractMockEc2Instance(String instanceID) {
+		this.instanceID = instanceID;
+	}
 
 
     /**
@@ -696,6 +703,17 @@ public abstract class AbstractMockEc2Instance implements Serializable {
             this.securityGroups = newSecurityGroups;
         }
     }
+
+	public final Set<InstanceEvent> getEvents() {
+
+		return events;
+	}
+
+	public final void setEvents(Set<InstanceEvent> events) {
+		if (events != null){
+			this.events = events;
+		}
+	}
 
 
     /**

@@ -1,0 +1,19 @@
+predefined:
+  mock:
+    instances:
+      - instance-id: i-test
+        image-id: ami-123456
+        instance-type: t1.micro
+        public-dns-name: inst.compute.amazon.com
+        security-groups:
+          - sg-123456
+
+      - instance-id: i-running
+        state: running
+
+      - instance-id: i-events
+        events:
+          - code: instance-stop
+            description: The instance is running on degraded hardware
+            notAfter: '2015-11-06T13:30:20'
+            notBefore: '2015-11-04T13:30:20'

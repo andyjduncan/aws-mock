@@ -17,8 +17,12 @@ public class DefaultMockEc2Instance extends AbstractMockEc2Instance {
      */
     private static final long serialVersionUID = 1L;
 
+	public DefaultMockEc2Instance(String instanceID) {
 
-    @Override
+		super(instanceID);
+	}
+
+	@Override
     public void onStarted() {
         // do nothing by default
     }

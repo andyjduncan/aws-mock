@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.tlswe.awsmock.common.exception.AwsMockException;
+import com.tlswe.awsmock.common.util.InstanceUtils;
 import com.tlswe.awsmock.ec2.cxf_generated.InstanceStateChangeType;
 import com.tlswe.awsmock.ec2.cxf_generated.InstanceStateType;
 import com.tlswe.awsmock.ec2.exception.BadEc2RequestException;
@@ -54,7 +55,8 @@ public final class MockEc2Controller {
      * Constructor of MockEc2Controller is made private and only called once by {@link #getInstance()}.
      */
     private MockEc2Controller() {
-
+		InstanceUtils.predefinedInstances().stream()
+				.forEach((inst) -> allMockEc2Instances.put(inst.getInstanceID(), inst));
     }
 
 

@@ -10,8 +10,8 @@ group = 'com.treelogic-swe'
 version = '1.0.1'
 ext.packaging = 'jar'
 
-sourceCompatibility = JavaVersion.VERSION_1_6
-targetCompatibility = JavaVersion.VERSION_1_6
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 allprojects {
     repositories {
@@ -26,9 +26,13 @@ dependencies {
     compile 'log4j:log4j:1.2.17'
     compile 'org.freemarker:freemarker:2.3.20'
     compile 'com.treelogic-swe:cxf-stub:1.0.1'
+
+	compile 'org.yaml:snakeyaml:1.16'
     
     testCompile "junit:junit:4.9"
     testCompile "com.amazonaws:aws-java-sdk:1.5.3"
+
+	testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
 
 eclipse {

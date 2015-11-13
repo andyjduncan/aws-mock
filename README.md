@@ -15,6 +15,7 @@ Aws-mock currently features the following implemented interfaces of Amazon EC2:
 - startInstances
 - terminateInstances
 - describeInstances
+- describeInstanceStatus
 
 This mock can manage a huge amount of EC2 instances, making it super easy for you to test your applications. 
 
@@ -56,6 +57,10 @@ For more usage instructions including how to extend aws-mock, please look into o
 
 For detailed specification and reference for those interfaces already available in aws-mock, here is a list of them: [Implemented Requests and Responses](https://github.com/treelogic-swe/aws-mock/wiki/Technical-Specifications#implemented-requests-and-responses-ec2).
 
+### Predefined Instances
+
+You can create predefined instances by creating a `src/main/resources/instances.yml` file.  Look at
+`src/test/resource/instances.yml` for examples.
 
 ### API Documentation
 Please find API documentation for all currently implemented interfaces at the link below. Don't worry about the word 'javadoc' – you don't have to write any Java, just pick your favorite JVM-targeting language (Clojure, Scala, JRuby, Jython, Groovy, etc.) and off you go. The aws-mock contributors commit to supporting [Literate Programming](http://en.wikipedia.org/wiki/Literate_programming) in any JVM-targeting language you choose to use.
