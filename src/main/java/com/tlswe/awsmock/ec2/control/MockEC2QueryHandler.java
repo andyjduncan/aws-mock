@@ -396,7 +396,8 @@ public final class MockEC2QueryHandler {
 							}).forEach(eventsList::add);
 
 
-					statusItem.setEventsSet(events);
+					if ( !eventsList.isEmpty() )
+						statusItem.setEventsSet(events);
 
 					return statusItem;
 				})
