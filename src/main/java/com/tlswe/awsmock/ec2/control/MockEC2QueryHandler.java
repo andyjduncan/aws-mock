@@ -350,12 +350,9 @@ public final class MockEC2QueryHandler {
 
 	}
 
-
 	private DescribeInstanceStatusResponseType describeInstanceStatus(final Set<String> instanceIDs) {
 
 		Collection<AbstractMockEc2Instance> instances = mockEc2Controller.describeInstances(instanceIDs);
-
-		log.info("Got some instances " +instances);
 
 		DescribeInstanceStatusResponseType responseType = new DescribeInstanceStatusResponseType();
 		responseType.setRequestId(UUID.randomUUID().toString());
@@ -363,13 +360,8 @@ public final class MockEC2QueryHandler {
 
 		List<InstanceStatusItemType> statusList = statusSet.getItem();
 
-		log.info("Before stream " + statusSet.getItem());
-
 		instances.stream()
 				.map((inst) -> {
-					log.info(inst.getInstanceID());
-
-
 					InstanceStatusItemType statusItem = new InstanceStatusItemType();
 					statusItem.setInstanceId(inst.getInstanceID());
 					statusItem.setAvailabilityZone(DEFAULT_MOCK_PLACEMENT.getAvailabilityZone());
@@ -409,8 +401,6 @@ public final class MockEC2QueryHandler {
 					return statusItem;
 				})
 				.forEach(statusList::add);
-
-		log.info("Responding with " + statusSet.getItem());
 
 		responseType.setInstanceStatusSet(statusSet);
 
