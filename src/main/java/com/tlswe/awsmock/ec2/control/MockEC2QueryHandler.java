@@ -22,7 +22,8 @@ import com.tlswe.awsmock.ec2.cxf_generated.InstanceStatusEventsSetType;
 import com.tlswe.awsmock.ec2.cxf_generated.InstanceStatusItemType;
 import com.tlswe.awsmock.ec2.cxf_generated.InstanceStatusSetType;
 import com.tlswe.awsmock.ec2.cxf_generated.InstanceStatusType;
-import com.tlswe.awsmock.ec2.model.InstanceEvent;
+import com.tlswe.awsmock.ec2.cxf_generated.ResourceTagSetItemType;
+import com.tlswe.awsmock.ec2.cxf_generated.ResourceTagSetType;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -334,6 +335,25 @@ public final class MockEC2QueryHandler {
 				instItem.setInstanceType(instance.getInstanceType().getName());
 				instItem.setDnsName(instance.getPubDns());
 
+
+				ResourceTagSetType tags = new ResourceTagSetType();
+
+				List<ResourceTagSetItemType> tagsList = tags.getItem();
+
+				StreamSupport.stream(instance.getTags().spliterator(), false)
+						.map(tag -> {
+							ResourceTagSetItemType tagItem = new ResourceTagSetItemType();
+							tagItem.setKey(tag.getKey());
+							tagItem.setValue(tag.getValue());
+
+							return tagItem;
+						})
+						.forEach(tagsList::add);
+
+				if (!tagsList.isEmpty()) {
+					instItem.setTagSet(tags);
+				}
+
 				instsSet.getItem().add(instItem);
 
 				resInfo.setInstancesSet(instsSet);
@@ -389,7 +409,7 @@ public final class MockEC2QueryHandler {
 								InstanceStatusEventType eventType = new InstanceStatusEventType();
 								eventType.setCode(event.getCode());
 								eventType.setDescription(event.getDescription());
-								eventType.setNotAfter(XMLGregorianCalendarImpl.parse(event.getNotAfter()));
+								eventType.setNotAfter(event.getNotAfter() != null ?  XMLGregorianCalendarImpl.parse(event.getNotAfter()) : null);
 								eventType.setNotBefore(XMLGregorianCalendarImpl.parse(event.getNotBefore()));
 
 								return eventType;

@@ -4,6 +4,7 @@ import com.tlswe.awsmock.common.exception.AwsMockException;
 import com.tlswe.awsmock.ec2.model.AbstractMockEc2Instance;
 import com.tlswe.awsmock.ec2.model.AbstractMockEc2Instance.InstanceType;
 import com.tlswe.awsmock.ec2.model.InstanceEvent;
+import com.tlswe.awsmock.ec2.model.InstanceTag;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptySet;
+import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toSet;
 
 public class InstanceUtils {
@@ -108,7 +110,18 @@ public class InstanceUtils {
 										event.get("description"),
 										event.get("notAfter"),
 										event.get("notBefore")))
-								.collect(Collectors.toCollection(LinkedHashSet::new)));
+								.collect(toCollection(LinkedHashSet::new)));
+					}
+
+					List<Map<String, String>> tags = (List<Map<String, String>>) map.get("tags");
+
+					if ( tags != null ) {
+						instance.setTags(tags.stream()
+										.map((tag) -> new InstanceTag(
+												tag.get("key"),
+												tag.get("value")
+										))
+								.collect(toCollection(LinkedHashSet::new)));
 					}
 
 					String instanceState = (String) map.get("state");

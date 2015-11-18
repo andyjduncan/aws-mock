@@ -352,9 +352,11 @@ public abstract class AbstractMockEc2Instance implements Serializable {
     /**
      * Security groups for this ec2 instance.
      */
-    private Set<String> securityGroups = new TreeSet<String>();
+    private Set<String> securityGroups = new TreeSet<>();
 
 	private Set<InstanceEvent> events = new LinkedHashSet<>();
+
+	private Set<InstanceTag> tags = new LinkedHashSet();
 
     /**
      * Flag that indicates whether internal timer of this mock ec2 instance has been started (on instance start()).
@@ -715,8 +717,17 @@ public abstract class AbstractMockEc2Instance implements Serializable {
 		}
 	}
 
+	public Set<InstanceTag> getTags() {
+		return tags;
+	}
 
-    /**
+	public void setTags(Set<InstanceTag> tags) {
+		if (tags != null) {
+			this.tags = tags;
+		}
+	}
+
+	/**
      * Generate a random public dns name for a mock EC2 instance.
      *
      * @return a random public dns name

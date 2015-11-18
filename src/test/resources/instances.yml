@@ -17,3 +17,10 @@ predefined:
             description: The instance is running on degraded hardware
             notAfter: '2015-11-06T13:30:20'
             notBefore: '2015-11-04T13:30:20'
+
+      - instance-id: i-tags
+        tags:
+          - key: key1
+            value: value1
+          - key: key2
+            value: value2

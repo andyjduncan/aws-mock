@@ -51,6 +51,22 @@ class TestInstanceUtils extends Specification {
 		instances.every { it instanceof CustomInstanceClass }
 	}
 
+	void 'adds tags for an instance'() {
+		given:
+		def instances = InstanceUtils.predefinedInstances()
+
+		when:
+		def instance = instances.find { it.instanceID == 'i-tags' }
+
+		then:
+		def tag1 = instance.tags[0]
+		tag1.key == 'key1'
+		tag1.value == 'value1'
+		def tag2 = instance.tags[1]
+		tag2.key == 'key2'
+		tag2.value == 'value2'
+	}
+
 	void 'adds events for an instance'() {
 		given:
 		def instances = InstanceUtils.predefinedInstances()
